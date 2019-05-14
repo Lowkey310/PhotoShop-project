@@ -64,6 +64,7 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	  	private JMenuItem mirrorDiagonal;
 	  private JMenuItem createCollage;
 	  private JMenuItem detectEdge;
+	  private JMenuItem revertToOrginal;
 	  
 	  
 	  private DigitalPicture picture;
@@ -147,6 +148,7 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 				    mirrorDiagonal = new JMenuItem("Mirror Diagonally");
 			    createCollage = new JMenuItem("Create Collage");
 			    detectEdge = new JMenuItem("Detect Edge");
+			    revertToOrginal = new JMenuItem("Return To Original");
     
     // add the action listeners
 	    twentyFive.addActionListener(this);
@@ -795,6 +797,38 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	  if (a.getActionCommand().equals("Keep Only Blue"))
 		  {
 			  ((SimplePicture)picture).keepOnlyBlue();
+		  }
+	  if (a.getActionCommand().equals("Mirror Diagonally"))
+		  {
+			  
+		  }
+	  if (a.getActionCommand().equals("Mirror Horizontally"))
+		  {
+			  
+		  }
+	  if (a.getActionCommand().equals("Mirror Vertically"))
+		  {
+			  
+		  }
+	  if (a.getActionCommand().equals("Grayscale"))
+		  {
+			  ((SimplePicture)picture).grayscale();
+		  }
+	  if (a.getActionCommand().equals("Negate"))
+		  {
+			  ((SimplePicture)picture).negate();
+		  }
+	  if (a.getActionCommand().equals("Fix Underwater"))
+		  {
+			  ((SimplePicture)picture).fixUnderwater();
+		  }
+	  if (a.getActionCommand().equals("Detect Edge"))
+		  {
+			  ((SimplePicture)picture).edgeDetection(15);
+		  }
+	  if (a.getActionCommand().equals("Create Collage"))
+		  {
+			  ((SimplePicture)picture).createCollage();
 		  }
 	  }
   

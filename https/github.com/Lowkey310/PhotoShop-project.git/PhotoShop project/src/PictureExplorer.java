@@ -64,8 +64,8 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	  	private JMenuItem mirrorHorizontal;
 	  	private JMenuItem mirrorDiagonal;
 	  private JMenuItem createCollage;
+	  private JMenuItem createBorder;
 	  private JMenuItem detectEdge;
-	  private JMenuItem revertToOriginal;
 	  private JMenuItem textEditor;
 	  private JMenuItem drawingPad;
 	  
@@ -149,9 +149,9 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 				    mirrorDiagonal = new JMenuItem("Mirror Diagonally");
 			    createCollage = new JMenuItem("Create Collage");
 			    detectEdge = new JMenuItem("Detect Edge");
+			    createBorder = new JMenuItem("Create Border");
 			    textEditor = new JMenuItem("Add Text");
 			    drawingPad = new JMenuItem("Drawing Pad");
-			    revertToOriginal = new JMenuItem("Return To Original Picture");
     
     // add the action listeners
 	    twentyFive.addActionListener(this);
@@ -178,9 +178,9 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	    mirrorDiagonal.addActionListener(this);
 	    createCollage.addActionListener(this);
 	    detectEdge.addActionListener(this);
+	    createBorder.addActionListener(this);
 	    textEditor.addActionListener(this);
 	    drawingPad.addActionListener(this);
-	    revertToOriginal.addActionListener(this);
     
     // add the menu items to the menus
 	    zoomMenu.add(twentyFive);
@@ -210,11 +210,10 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	    changePictureMenu.add(fixUnderwater);
 	    changePictureMenu.add(detectEdge);
 	    changePictureMenu.add(createCollage);
+	    changePictureMenu.add(createBorder);
 	    changePictureMenu.addSeparator();
 	    changePictureMenu.add(textEditor);
 	    changePictureMenu.add(drawingPad);
-	    changePictureMenu.addSeparator();
-	    changePictureMenu.add(revertToOriginal);
 	    
 	    menuBar.add(zoomMenu);
 	    menuBar.add(changePictureMenu);
@@ -876,6 +875,10 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	  if (a.getActionCommand().equals("Create Collage"))
 		  {
 			  ((SimplePicture)picture).createCollage();
+		  }
+	  if (a.getActionCommand().equals("Create Border"))
+		  {
+			  //PUT MEAGHAN'S FEATURE IN HERE
 		  }
 	  if (a.getActionCommand().equals("Add Text"))
 		  {

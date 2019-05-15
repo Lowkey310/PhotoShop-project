@@ -43,6 +43,9 @@ public class SimplePicture implements DigitalPicture
    * extension for this file (jpg or bmp)
    */
 	private String extension;
+	
+	
+	private Pixel[][] originalPixels;
   
  
  /////////////////////// Constructors /////////////////////////
@@ -69,6 +72,7 @@ public class SimplePicture implements DigitalPicture
    
    // load the picture into the buffered image 
 		load(fileName);  
+		originalPixels = this.getPixels2D();
 		}
  
  /**
@@ -85,6 +89,7 @@ public class SimplePicture implements DigitalPicture
 	   fileName = "None";
 	   extension = "jpg";
 	   setAllPixelsToAColor(Color.white);
+		originalPixels = this.getPixels2D();
 		}
  
  /**
@@ -99,6 +104,7 @@ public class SimplePicture implements DigitalPicture
 		{
 	   this(width,height);
 	   setAllPixelsToAColor(theColor);
+		originalPixels = this.getPixels2D();
 		}
  
  /**
@@ -119,6 +125,8 @@ public class SimplePicture implements DigitalPicture
 			this.bufferedImage = new BufferedImage(copyPicture.getWidth(),
                                             copyPicture.getHeight(), BufferedImage.TYPE_INT_RGB);
 			this.copyPicture(copyPicture);
+			
+			originalPixels = this.getPixels2D();
 			}
 		}
  
@@ -132,6 +140,7 @@ public class SimplePicture implements DigitalPicture
 	   title = "None";
 	   fileName = "None";
 	   extension = "jpg";
+		originalPixels = this.getPixels2D();
 		}
  
  ////////////////////////// Methods //////////////////////////////////
@@ -987,8 +996,62 @@ public class SimplePicture implements DigitalPicture
 		        topRight.setColor(bottomLeft.getColor());
 	    		}
 	    	} 
-		
 	}
+
+	public void mirrorDiagonalBottomLeftToTopRight()
+	{
+	    Pixel[][] pixels = this.getPixels2D();
+	    Pixel topRight = null;
+	    Pixel bottomLeft = null;
+	    int width = pixels.length;
+	    for (int row = 0; row < width; row++)
+	    	{
+	    	for (int col = 0; col < width && col != row; col++)
+	    		{
+		        topRight = pixels[row][col];
+		        bottomLeft = pixels[col][row];
+		        bottomLeft.setColor(topRight.getColor());
+	    		}
+	    	} 
+	}
+	
+
+	public void mirrorDiagonalTopLeftToBottomRight()
+	{
+	    Pixel[][] pixels = this.getPixels2D();
+	    Pixel topLeft = null;
+	    Pixel bottomRight = null;
+	    int width = pixels.length;
+	    for (int row = 0; row < width; row++)
+	    	{
+	    	for (int col = 0; col < width; col++)
+	    		{
+		        topLeft = pixels[row][col];
+		        int newCol = Math.abs(width - 1 - row); 
+		        int newRow = (Math.abs(width - 1 - col));
+		        bottomRight = pixels[newRow][newCol];
+		        bottomRight.setColor(topLeft.getColor());
+	    		}
+	    	} 
+	}
+	public void mirrorDiagonalBottomRightToTopLeft()
+		{
+		    Pixel[][] pixels = this.getPixels2D();
+		    Pixel topLeft = null;
+		    Pixel bottomRight = null;
+		    int width = pixels.length;
+		    for (int row = 0; row < width; row++)
+		    	{
+		    	for (int col = 0; col < width; col++)
+		    		{
+			        topLeft = pixels[row][col];
+			        int newCol = Math.abs(width - 1 - row); 
+			        int newRow = (Math.abs(width - 1 - col));
+			        bottomRight = pixels[newRow][newCol];
+			        topLeft.setColor(bottomRight.getColor());
+		    		}
+		    	} 
+		}
 	
   /** Mirror just part of a picture of a temple */
 	public void mirrorTemple()
@@ -1084,6 +1147,4 @@ public class SimplePicture implements DigitalPicture
 	    		}
 	    	}
 		}
-	
-	
 	} // end of SimplePicture class

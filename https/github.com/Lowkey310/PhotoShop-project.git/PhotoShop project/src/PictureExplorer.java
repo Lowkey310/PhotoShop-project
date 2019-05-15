@@ -1,8 +1,10 @@
-
+//Added a comment
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.image.*;
+import java.io.IOException;
+
 import javax.swing.border.*;
 /**
  * Displays a picture and lets you explore the picture by displaying the row, column, red,
@@ -55,7 +57,6 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	  	private JMenuItem keepOnlyRed;
 	  	private JMenuItem zeroGreen;
 	  	private JMenuItem keepOnlyGreen;
-	  	private JMenuItem custom;
 	  private JMenuItem negate;
 	  private JMenuItem fixUnderwater;
 	  private JMenuItem mirrorImage;
@@ -64,8 +65,9 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	  	private JMenuItem mirrorDiagonal;
 	  private JMenuItem createCollage;
 	  private JMenuItem detectEdge;
-	  private JMenuItem revertToOrginal;
-	  
+	  private JMenuItem revertToOriginal;
+	  private JMenuItem textEditor;
+	  private JMenuItem drawingPad;
 	  
 	  private DigitalPicture picture;
 	  private ImageIcon scrollImageIcon;
@@ -139,7 +141,6 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 				    keepOnlyRed = new JMenuItem("Keep Only Red");
 				    zeroGreen = new JMenuItem("Zero Green");
 				    keepOnlyGreen = new JMenuItem("Keep Only Green");
-				    custom = new JMenuItem("Custom");
 			    negate = new JMenuItem("Negate");
 			    fixUnderwater = new JMenuItem("Fix Underwater");
 			    mirrorImage = new JMenu("Mirror Image");
@@ -148,7 +149,9 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 				    mirrorDiagonal = new JMenuItem("Mirror Diagonally");
 			    createCollage = new JMenuItem("Create Collage");
 			    detectEdge = new JMenuItem("Detect Edge");
-			    revertToOrginal = new JMenuItem("Return To Original");
+			    textEditor = new JMenuItem("Add Text");
+			    drawingPad = new JMenuItem("Drawing Pad");
+			    revertToOriginal = new JMenuItem("Return To Original Picture");
     
     // add the action listeners
 	    twentyFive.addActionListener(this);
@@ -167,7 +170,6 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	    zeroGreen.addActionListener(this);
 	    keepOnlyRed.addActionListener(this);
 	    keepOnlyGreen.addActionListener(this);
-	    custom.addActionListener(this);
 	    negate.addActionListener(this);
 	    fixUnderwater.addActionListener(this);
 	    mirrorImage.addActionListener(this);
@@ -176,6 +178,9 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	    mirrorDiagonal.addActionListener(this);
 	    createCollage.addActionListener(this);
 	    detectEdge.addActionListener(this);
+	    textEditor.addActionListener(this);
+	    drawingPad.addActionListener(this);
+	    revertToOriginal.addActionListener(this);
     
     // add the menu items to the menus
 	    zoomMenu.add(twentyFive);
@@ -197,7 +202,6 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	    changeColor.add(keepOnlyGreen);
 	    changeColor.add(keepOnlyBlue);
 	    changeColor.add(grayscale);
-	    changeColor.add(custom);
 	    
 	    changePictureMenu.add(changeColor);
 	    changePictureMenu.add(mirrorImage);
@@ -206,6 +210,11 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	    changePictureMenu.add(fixUnderwater);
 	    changePictureMenu.add(detectEdge);
 	    changePictureMenu.add(createCollage);
+	    changePictureMenu.addSeparator();
+	    changePictureMenu.add(textEditor);
+	    changePictureMenu.add(drawingPad);
+	    changePictureMenu.addSeparator();
+	    changePictureMenu.add(revertToOriginal);
 	    
 	    menuBar.add(zoomMenu);
 	    menuBar.add(changePictureMenu);
@@ -800,15 +809,53 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 		  }
 	  if (a.getActionCommand().equals("Mirror Diagonally"))
 		  {
-			  
+			  String[] choices = {"Top Right onto the Bottom Left", "Bottom Left onto the Top Right", "Bottom Right onto the Top Left", "Top Left onto Bottom Right"};
+			  JFrame frame = new JFrame();
+			  String choice = (String) JOptionPane.showInputDialog(frame, "Which side would you like to mirror?", "Choosing Side To Mirror", JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
+			  if (choice.equals("Top Right onto the Bottom Left"))
+				  {
+					  ((SimplePicture)picture).mirrorDiagonal();
+				  }
+			  else if (choice.equals("Bottom Left onto the Top Right"))
+				  {
+					  ((SimplePicture)picture).mirrorDiagonalBottomLeftToTopRight();
+				  }
+			  else if (choice.equals("Bottom Right onto the Top Left"))
+				  {
+					  ((SimplePicture)picture).mirrorDiagonalBottomRightToTopLeft();
+				  }
+			  else
+				  {
+					  ((SimplePicture)picture).mirrorDiagonalTopLeftToBottomRight();
+				  }
 		  }
 	  if (a.getActionCommand().equals("Mirror Horizontally"))
 		  {
-			  
+			  String[] choices = {"Top onto Bottom", "Bottom onto Top"};
+			  JFrame frame = new JFrame();
+			  String choice = (String) JOptionPane.showInputDialog(frame, "Which side would you like to mirror?", "Choosing Side To Mirror", JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
+			  if (choice.equals("Top onto Bottom"))
+				  {
+					  ((SimplePicture)picture).mirrorHorizontal();
+				  }
+			  else
+				  {
+					  ((SimplePicture)picture).mirrorHorizontalBottomToTop();
+				  }
 		  }
 	  if (a.getActionCommand().equals("Mirror Vertically"))
 		  {
-			  
+			  String[] choices = {"Left onto Right", "Right onto Left"};
+			  JFrame frame = new JFrame();
+			  String choice = (String) JOptionPane.showInputDialog(frame, "Which side would you like to mirror?", "Choosing Side To Mirror", JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
+			  if (choice.equals("Left onto Right"))
+				  {
+					  ((SimplePicture)picture).mirrorVertical();
+				  }
+			  else
+				  {
+					  ((SimplePicture)picture).mirrorVerticalRightToLeft();
+				  }
 		  }
 	  if (a.getActionCommand().equals("Grayscale"))
 		  {
@@ -829,6 +876,21 @@ public class PictureExplorer implements MouseMotionListener, ActionListener, Mou
 	  if (a.getActionCommand().equals("Create Collage"))
 		  {
 			  ((SimplePicture)picture).createCollage();
+		  }
+	  if (a.getActionCommand().equals("Add Text"))
+		  {
+			  String message = JOptionPane.showInputDialog("What Would You Like To Say?", "Input Text Here");
+			  ((SimplePicture)picture).addMessage(message, 100, 100);
+		  }
+	  if (a.getActionCommand().equals("Drawing Pad"))
+		  {
+			  try
+				{
+					BlakeMethods.runner();
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
 		  }
 	  }
   
